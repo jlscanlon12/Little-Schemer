@@ -80,3 +80,49 @@
     (cond
       ((zero? b) 0)
       (else (o+ a (o* a (sub1 b)))))))
+
+;; add two tuples together
+(define tup+
+  (lambda (tup1 tup2)
+    (cond
+      ((null? tup1) tup2)
+      ((null? tup2) tup1)
+      (else (cons (o+ (first tup1) (first tup2))
+                  (tup+ (rest tup1) (rest tup2)))))))
+
+;; recursive greater than
+(define o>
+  (lambda (a b)
+    (cond
+      ((zero? a) #f)
+      ((zero? b) #t)
+      (else (o> (sub1 a) (sub1 b))))))
+
+;; recursive less than
+(define o<
+  (lambda (a b)
+    (cond
+      ((zero? b) #f)
+      ((zero? a) #t)
+      (else (o< (sub1 a) (sub1 b))))))
+      
+;; recrusive equal
+(define o=
+  (lambda (a b)
+    (cond
+      ((not (or (o> a b) (o< a b))) #t)
+      (else #f))))
+
+;; recursive exponent
+(define o^
+  (lambda (a b)
+    (cond
+      ((zero? b) 1)
+      (else (o* a (o^ a (sub1 b)))))))
+
+;; recursive division
+(define o/
+  (lambda (a b)
+    (cond
+      ((o< n m) 0)
+      (else (add1 (o/ (o- a b) b))))))
