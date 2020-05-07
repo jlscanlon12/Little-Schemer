@@ -1,6 +1,6 @@
 #lang racket
 
-;; inserts one atom to the left of another specified atom
+
 (define insertL
   (lambda (new old atomic-list)
     (cond
@@ -10,8 +10,6 @@
                (cons new atomic-list))
               (else (cons (first atomic-list)
                           (insertL new old (rest atomic-list)))))))))
-
-;; Replaces one atom with another atom
 (define subst
   (lambda (new old atomic-list)
     (cond
@@ -20,7 +18,6 @@
               ((eq? old (first atomic-list)) (cons new (rest atomic-list)))
               (else (cons (first atomic-list) (subst new old (rest atomic-list)))))))))
 
-;; inserts an atom to the right of each instance of a specified atom
 (define multiinsertR
   (lambda (new old atomic-list)
     (cond
@@ -32,7 +29,6 @@
                            (multiinsertR new old (rest atomic-list)))))
               (else (cons (first atomic-list) (multiinsertR new old (rest atomic-list)))))))))
 
-;; same as multiinsertR but inserts to the left
 (define multiinsertL
   (lambda (new old atomic-list)
     (cond
@@ -44,7 +40,6 @@
                            (multiinsertL new old (rest atomic-list)))))
               (else (cons (first atomic-list) (multiinsertL new old (rest atomic-list)))))))))
 
-;; repleaces each instance of an atom with another atom
 (define multisubst
   (lambda (new old atomic-list)
     (cond
@@ -53,28 +48,24 @@
               ((eq? old (first atomic-list)) (cons new (multisubst new old (rest atomic-list))))
               (else (cons (first atomic-list) (multisubst new old (rest atomic-list)))))))))
 
-;; recursive addition
 (define o+
   (lambda (a b)
     (cond
       ((zero? b) a)
       (else (add1 (o+ a (sub1 b)))))))
 
-;; recursive subtraction
 (define o-
   (lambda (a b)
     (cond
       ((zero? b) a)
       (else (sub1 (o- a (sub1 b)))))))
 
-;; adds elements of a tuple together
 (define addtuple
   (lambda (tuple)
     (cond
       ((null? tuple) 0)
       (else (o+ (first tuple) (addtuple (rest tuple)))))))
 
-;; recursive multiplication
 (define o*
   (lambda (a b)
     (cond
