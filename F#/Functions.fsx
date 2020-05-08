@@ -133,3 +133,18 @@ let rec isEqual (num1 : uint32) (num2 : uint32) =
     // else
     //     true
     not (greaterThan num1 num2 || lessThan num1 num2)
+
+let rec recPow (baseNum : uint32) (expNum : uint32) =
+    if isZero expNum then 1u
+    else
+        // recMultiply baseNum (recPow baseNum (sub1 expNum))
+        sub1 expNum |> recPow baseNum |> recMultiply baseNum
+
+let rec recDiv (num1 : uint32) (num2 : uint32) =
+    if lessThan num1 num2 then 0u
+    else
+        // add1 (recDiv (recSub num1 num2) num2)
+        recDiv (recSub num1 num2) num2 |> add1
+
+
+recDiv 6u 2u
