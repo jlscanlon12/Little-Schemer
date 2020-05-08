@@ -146,5 +146,3 @@ let rec recDiv (num1 : uint32) (num2 : uint32) =
         // add1 (recDiv (recSub num1 num2) num2)
         recDiv (recSub num1 num2) num2 |> add1
 
-
-recDiv 6u 2u
