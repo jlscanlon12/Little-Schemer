@@ -1,3 +1,19 @@
+open System
+open System.Text
+
+let isPair (inputList : List<'T>) =
+    inputList.Length = 2
+
+let isAtom x =
+    not (isPair x) && not x.IsEmpty
+
+let rec isAtomicList (inputList : string list) =
+    if inputList.IsEmpty then true
+    elif isAtom [inputList.Head]
+        then isAtomicList inputList.Tail
+    else
+        false
+
 let rec isMember (atom : string) (l_input : string list) =
     if l_input.IsEmpty then false
     else (l_input.Head = atom) || isMember atom l_input.Tail
@@ -146,3 +162,62 @@ let rec recDiv (num1 : uint32) (num2 : uint32) =
         // add1 (recDiv (recSub num1 num2) num2)
         recDiv (recSub num1 num2) num2 |> add1
 
+let rec length (atomicList : string list) =
+    if atomicList.IsEmpty then 0u
+    else
+        // add1 (length atomicList.Tail)
+        length atomicList.Tail |> add1
+
+let rec pick (index : uint32) (atomicList : string list) =
+    if //isZero (sub1 index) then atomicList.Head
+        sub1 index |> isZero then atomicList.Head
+    else
+        pick (sub1 index) atomicList.Tail
+        
+let rec remPick (index : uint32) (atomicList : string list) = 
+    if //isZero (sub1 index) then atomicList.Tail
+        sub1 index |> isZero then atomicList.Tail
+    else
+        atomicList.Head :: remPick (sub1 index) atomicList.Tail
+
+let isNumber (elem : string) =
+    let (value : bool), (intNum : int32) = System.Int32.TryParse(elem)
+    value
+
+let rec noNums (nonAtomicList : string list) = 
+    if nonAtomicList.IsEmpty then []
+    else
+        if isNumber nonAtomicList.Head
+            then noNums nonAtomicList.Tail
+        else
+            nonAtomicList.Head :: noNums nonAtomicList.Tail
+
+let rec allNums (nonAtomicList : string list) =
+    if nonAtomicList.IsEmpty then []
+    else
+        if isNumber nonAtomicList.Head
+            then nonAtomicList.Head :: allNums nonAtomicList.Tail
+        else
+            allNums nonAtomicList.Tail
+
+let rec isEquivalent a1 a2 =
+    if isNumber a1 && isNumber a2
+        then isEqual (System.UInt32.Parse(a1)) (System.UInt32.Parse(a2))
+    elif isNumber a1 || isNumber a2
+        then false
+    else
+        String.Equals(a1, a2)
+
+let rec remberStar (atom : string) (atomicList : string list) =
+    if atomicList.IsEmpty then []
+    elif 
+
+
+
+
+
+
+
+
+//let nonAtomicList = ["5"; "pears"; "6"; "prunes"; "9"; "dates"]
+// let inputList = ["hi"; "I"; "like"; "to"; "code"]
